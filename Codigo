@@ -1,0 +1,45 @@
+-- Criar Banco de Dados
+IF DB_ID('biblioteca') IS NULL
+BEGIN
+    CREATE DATABASE biblioteca;
+END
+GO
+
+-- Usar o Banco
+USE biblioteca;
+GO
+
+-- Criar Tabela de Autores
+IF OBJECT_ID('autores', 'U') IS NULL
+BEGIN
+    CREATE TABLE autores (
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        nome NVARCHAR(100) NOT NULL
+    );
+END
+GO
+
+-- Criar Tabela de Livros
+IF OBJECT_ID('livros', 'U') IS NULL
+BEGIN
+    CREATE TABLE livros (
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        titulo NVARCHAR(150) NOT NULL,
+        autor_id INT,
+        ano_publicacao INT,
+        CONSTRAINT FK_autor FOREIGN KEY (autor_id) REFERENCES autores(id)
+    );
+END
+GO
+
+-- Inserir Dados na Tabela Autores
+INSERT INTO autores (nome) VALUES 
+('George Orwell'), 
+('J.K. Rowling');
+GO
+
+-- Inserir Dados na Tabela Livros
+INSERT INTO livros (titulo, autor_id, ano_publicacao) VALUES
+('1984', 1, 1949),
+('Harry Potter e a Pedra Filosofal', 2, 1997);
+GO
